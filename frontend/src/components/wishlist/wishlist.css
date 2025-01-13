@@ -1,0 +1,40 @@
+/* Add this to your CSS file or a style block */
+
+.wishlist-item {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .wishlist-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 16px;
+  }
+  
+  .wishlist-item h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .wishlist-item p {
+    margin: 8px 0;
+  }
+  
+  .wishlist-item button {
+    margin-left: auto;
+    /* padding: 8px 16px; */
+    background-color: transparent;
+    /* color: #fff; */
+    border: none;
+    cursor: pointer;
+  }
+  
+  .wishlist-item button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
