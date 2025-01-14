@@ -41,12 +41,18 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 connectDatabase();
 
 
-app.use(
-  cors({
-    origin: process.env.NODE_ENV === "PRODUCTION" ? process.env.FRONTEND_URL : "http://localhost:3000",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.NODE_ENV === "PRODUCTION" ? process.env.FRONTEND_URL : "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
+
+app.use(cors({
+  origin: "https://deccors-final-fie9.vercel.app", // Your frontend origin
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true // If cookies are involved
+}));
 
 // app.use(cors());
 
