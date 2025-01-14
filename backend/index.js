@@ -43,16 +43,38 @@ connectDatabase();
 
 // app.use(
 //   cors({
-//     origin: process.env.NODE_ENV === "PRODUCTION" ? process.env.FRONTEND_URL : "http://localhost:3000",
+//     // origin: process.env.NODE_ENV === "PRODUCTION" ? process.env.FRONTEND_URL : "http://localhost:3000",
+//     origin: (origin, callback) => {
+//       callback(null, origin); // Dynamically allow all origins
+//   },
 //     credentials: true,
 //   })
 // );
 
-app.use(cors({
-  origin: "https://deccors-final-fie9.vercel.app", // Your frontend origin
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true // If cookies are involved
-}));
+const allowedOrigins = [process.env.FRONTEND_URL];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin); // Allow if origin is in the allowed list
+      } else {
+        callback(new Error("Not allowed by CORS")); // Block untrusted origins
+      }
+    },
+    credentials: true,
+  })
+);
+
+
+
+
+
+// app.use(cors({
+//   origin: "https://deccors-final-fie9.vercel.app", // Your frontend origin
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   credentials: true // If cookies are involved
+// }));
 
 // app.use(cors());
 
@@ -78,13 +100,13 @@ app.use("/api/v1", wishlistRoutes);
 app.use("/api/v1", contactRoutes);
 
 // connecting front to back
-if (process.env.NODE_ENV === "PRODUCTION") {
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
+// if (process.env.NODE_ENV === "PRODUCTION") {
+//   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+//   });
+// }
 
 // error middleware
 app.use(errorMiddleware);
